@@ -3,153 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Demo Login</title>
+  <title>Log In</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    }
-
     body {
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
       display: flex;
-      align-items: center;
       justify-content: center;
-      background: #0f172a;
-      color: #f8fafc;
-      padding: 1rem;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
 
-    .login-card {
-      width: 100%;
-      max-width: 380px;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
     }
 
-    .badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #fb923c;
-      background: rgba(251, 146, 60, 0.12);
-      border: 1px solid rgba(251, 146, 60, 0.3);
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      margin-bottom: 0.75rem;
-    }
-
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 0.35rem;
-    }
-
-    p.subtitle {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
+    h2 {
+      margin-top: 0;
+      text-align: center;
     }
 
     label {
       display: block;
-      font-size: 0.85rem;
-      color: #cbd5e1;
-      margin-bottom: 0.4rem;
+      margin-top: 12px;
+      font-size: 14px;
     }
 
     input {
       width: 100%;
-      padding: 0.65rem 0.8rem;
-      border-radius: 8px;
-      border: 1px solid #475569;
-      background: #0f172a;
-      color: #f8fafc;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.15s;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #eee;
     }
 
-    input:focus {
-      border-color: #f97316;
-    }
-
-    button {
+    .login-btn {
+      display: block;
       width: 100%;
-      margin-top: 0.5rem;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 8px;
-      background: #ea580c;
-      color: #ffffff;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    button:hover {
-      background: #c2410c;
-    }
-
-    .demo-note {
-      margin-top: 1rem;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #ea580c;
+      color: white;
       text-align: center;
-      font-size: 0.8rem;
-      color: #64748b;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+
+    .login-btn:hover {
+      background-color: #c2410c;
     }
   </style>
 </head>
 <body>
-  <main class="login-card">
-    <span class="badge">Demo Mode</span>
-    <h1>Welcome back</h1>
-    <p class="subtitle">Enter any details or just click Log In to preview.</p>
 
-    <form id="demoLoginForm">
-      <div class="form-group">
-        <label for="email">Email or Username</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          placeholder="demo@example.com"
-          value="demo@example.com"
-        />
-      </div>
+  <div class="box">
+    <h2>Log In</h2>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="••••••••"
-          value="password123"
-        />
-      </div>
+    <label>Username</label>
+    <input type="text" placeholder="Demo User" readonly />
 
-      <button type="submit">Log In</button>
-    </form>
+    <label>Password</label>
+    <input type="password" placeholder="••••••••" readonly />
 
-    <p class="demo-note">No authentication is performed—redirects straight to dashboard.html.</p>
-  </main>
+    <a href="dashboard.html" class="login-btn">Log In</a>
+  </div>
 
-  <script>
-    document.getElementById("demoLoginForm").addEventListener("submit", function (event) {
-      event.preventDefault(); // Stops actual form submission
-      window.location.href = "dashboard.html"; // Relative redirect
-    });
-  </script>
 </body>
 </html>
