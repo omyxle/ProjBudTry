@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PROJECTBUD - Schedule</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+/* GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #EBEBD8;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    background-color: #15370D;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+    flex-shrink: 0;
+}
+
+.web-name {
+    text-align: center;
+    padding: 20px 10px 35px;
+}
+
+.web-name div {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-item i {
+    width: 25px;
+    text-align: center;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color: #6a914e;
+}
+
+.nav-item.active {
+    font-weight: bold;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.top-header {
+    background-color: white;
+    padding: 20px 25px;
+    border-bottom: 1px solid #ddd;
+}
+
+.schedule-section {
+    padding: 25px;
+}
+
+/* CARDS */
+.card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-bottom: 20px;
+    color: #15370D;
+}
+
+/* DEADLINE ITEMS */
+.deadline-item {
+    border: 1px solid #ddd;
+    border-left: 5px solid #6a914e;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.deadline-item h3 {
+    color: #15370D;
+    margin-bottom: 8px;
+}
+
+.deadline-item p {
+    color: #555;
+    margin-bottom: 8px;
+}
+
+/* ACTIVITY AND TASK COLORS */
+.activity-deadline {
+    border-left-color: #4b9147;
+}
+
+.task-deadline {
+    border-left-color: #4285c5;
+}
+
+/* DEADLINE STATUS */
+.deadline-label {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.overdue {
+    background-color: #f8d7da;
+    color: #a12630;
+}
+
+.due-today {
+    background-color: #fff0c2;
+    color: #946800;
+}
+
+.upcoming {
+    background-color: #dcebd8;
+    color: #356b2d;
+}
+
+/* EMPTY MESSAGE */
+.empty-message {
+    color: #777;
+    padding: 10px 0;
+}
+
+/* SMALL SCREENS */
+@media (max-width: 650px) {
+    .sidebar {
+        width: 170px;
+    }
+
+    .schedule-section {
+        padding: 12px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="web-name">
+            <div>PROJECTBUD</div>
+        </div>
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="activities.html" class="nav-item">
+                <i class="fa-solid fa-folder"></i>
+                <span>Activities</span>
+            </a>
+
+            <a href="tasks.html" class="nav-item">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Tasks</span>
+            </a>
+
+            <a href="schedule.html" class="nav-item active">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Schedule</span>
+            </a>
+
+        </nav>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <header class="top-header">
+            <h2>Schedule</h2>
+        </header>
+
+        <main class="schedule-section">
+
+            <!-- PENDING ACTIVITIES -->
+            <div class="card">
+
+                <h2>Pending Activities</h2>
+
+                <div id="activityDeadlines">
+                    No pending activities yet.
+                </div>
+
+            </div>
+
+            <!-- PENDING MEMBER TASKS -->
+            <div class="card">
+
+                <h2>Pending Member Tasks</h2>
+
+                <div id="taskDeadlines">
+                    No pending tasks yet.
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+
+// GET SAVED DATA
+let activities = JSON.parse(localStorage.getItem("activities")) || [];
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+// GET HTML ELEMENTS
+const activityDeadlines = document.getElementById("activityDeadlines");
+const taskDeadlines = document.getElementById("taskDeadlines");
+
+// GET TODAY'S DATE
+function getToday() {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    return year + "-" + month + "-" + day;
+}
+
+// FORMAT DATE
+function formatDate(dateString) {
+    const date = new Date(dateString + "T00:00:00");
+
+    return date.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+    });
+}
+
+// GET DEADLINE STATUS
+function getDeadlineStatus(deadline) {
+    const today = getToday();
+
+    if (deadline < today) {
+        return "Overdue";
+    }
+
+    if (deadline === today) {
+        return "Due Today";
+    }
+
+    return "Upcoming";
+}
+
+// GET DEADLINE COLOR
+function getDeadlineClass(deadline) {
+    const status = getDeadlineStatus(deadline);
+
+    if (status === "Overdue") {
+        return "overdue";
+    }
+
+    if (status === "Due Today") {
+        return "due-today";
+    }
+
+    return "upcoming";
+}
+
+// SORT BY CLOSEST DEADLINE
+function sortByDeadline(items, dateField) {
+    return items.sort(function(a, b) {
+        return a[dateField].localeCompare(b[dateField]);
+    });
+}
+
+// CREATE DEADLINE LABEL
+function createDeadlineLabel(deadline) {
+    const label = document.createElement("span");
+
+    label.className = "deadline-label " + getDeadlineClass(deadline);
+    label.textContent = getDeadlineStatus(deadline);
+
+    return label;
+}
+
+// DISPLAY PENDING ACTIVITIES
+function showActivityDeadlines() {
+    activityDeadlines.innerHTML = "";
+
+    // Only get activities that are in progress
+    const pendingActivities = activities.filter(function(activity) {
+        return activity.status === "In Progress" && activity.date;
+    });
+
+    // Sort from closest to latest
+    sortByDeadline(pendingActivities, "date");
+
+    if (pendingActivities.length === 0) {
+        activityDeadlines.textContent = "No pending activities yet.";
+        activityDeadlines.className = "empty-message";
+        return;
+    }
+
+    activityDeadlines.className = "";
+
+    pendingActivities.forEach(function(activity) {
+        const item = document.createElement("div");
+        item.className = "deadline-item activity-deadline";
+
+        const name = document.createElement("h3");
+        name.textContent = activity.name;
+
+        const description = document.createElement("p");
+        description.textContent = activity.description;
+
+        const date = document.createElement("p");
+        date.textContent = "Deadline: " + formatDate(activity.date);
+
+        item.appendChild(name);
+        item.appendChild(description);
+        item.appendChild(date);
+        item.appendChild(createDeadlineLabel(activity.date));
+
+        activityDeadlines.appendChild(item);
+    });
+}
+
+// DISPLAY PENDING MEMBER TASKS
+function showTaskDeadlines() {
+    taskDeadlines.innerHTML = "";
+
+    // Only get tasks that are in progress
+    const pendingTasks = tasks.filter(function(task) {
+        return task.status === "In Progress" && task.deadline;
+    });
+
+    // Sort from closest to latest
+    sortByDeadline(pendingTasks, "deadline");
+
+    if (pendingTasks.length === 0) {
+        taskDeadlines.textContent = "No pending tasks yet.";
+        taskDeadlines.className = "empty-message";
+        return;
+    }
+
+    taskDeadlines.className = "";
+
+    pendingTasks.forEach(function(task) {
+        const item = document.createElement("div");
+        item.className = "deadline-item task-deadline";
+
+        const name = document.createElement("h3");
+        name.textContent = task.name;
+
+        const activity = document.createElement("p");
+        activity.textContent = "Activity: " + task.activity;
+
+        const member = document.createElement("p");
+        member.textContent = "Assigned to: " + task.member;
+
+        const date = document.createElement("p");
+        date.textContent = "Deadline: " + formatDate(task.deadline);
+
+        item.appendChild(name);
+        item.appendChild(activity);
+        item.appendChild(member);
+        item.appendChild(date);
+        item.appendChild(createDeadlineLabel(task.deadline));
+
+        taskDeadlines.appendChild(item);
+    });
+}
+
+// LOAD SCHEDULE
+function loadSchedule() {
+
+    // Get the latest saved data
+    activities = JSON.parse(localStorage.getItem("activities")) || [];
+    tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    // Give older activities a default status
+    activities.forEach(function(activity) {
+        if (!activity.status) {
+            activity.status = "In Progress";
+        }
+    });
+
+    // Save updated activities
+    localStorage.setItem("activities", JSON.stringify(activities));
+
+    // Display both deadline lists
+    showActivityDeadlines();
+    showTaskDeadlines();
+}
+
+// RUN WHEN PAGE OPENS
+loadSchedule();
+
+    </script>
+
+</body>
+</html>

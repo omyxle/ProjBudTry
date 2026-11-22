@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECTBUD</title>
+
+    <!-- Links for Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    background-color: #EBEBD8;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #15370D;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+    flex-shrink: 1;
+}
+
+.web-name {
+    text-align: center;
+    padding: 20px 10px 35px 10px;
+}
+
+.web-name div{
+    font-size: 25px;
+    font-weight: 800;
+    color: white;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-item i {
+    width: 25px;
+    text-align: center;
+}
+
+.nav-item:hover {
+background-color: #6a914e;
+cursor: pointer;
+}
+
+.nav-item.active {
+    background-color: #6a914e;
+    font-weight: bold;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+}
+
+/* Dashboard Content Styles */
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.top-header {
+    background-color: white;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px solid white;
+}
+
+.profile-link {
+    font-size: 36px;
+    color: #15370D
+}
+
+.dashboard-section {
+    padding: 25px;
+    width: 100%;
+}
+
+.welcome-banner {
+    background-color: #15370D;
+    color: white;
+    padding: 36px 32px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.welcome-banner h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.welcome-banner p {
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 750px;
+    color: #e2e8f0;
+}
+</style>
+<body>
+    
+    <div class="sidebar">
+         <div class="web-name">
+            <div>PROJECTBUD</div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item active" id="dash-nav"> 
+                <i class="fa-solid fa-house"></i> <span>Dashboard</span>
+            </a>
+
+            <a href="activities.html" class="nav-item" id="act-nav">
+                <i class="fa-solid fa-folder"></i> <span>Activities</span>
+            </a>
+
+            <a href="tasks.html" class="nav-item" id="tasks-nav">
+                <i class="fa-solid fa-list-check"></i> <span>Tasks</span>
+            </a>
+
+            <a href="schedule.html" class="nav-item" id="sched-nav">
+                <i class="fa-solid fa-calendar"></i> <span>Schedule</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="logout.html" class="nav-item">
+                <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+             <header class="top-header">
+            <a href="profile.html" class="profile-link">
+                <i class="fa-solid fa-circle-user"></i>
+            </a>
+        </header>
+
+        <div id="dashboard-content" class="dashboard section" style="width: 100%; padding: 20px;">
+                <!-- Welcome Banner -->
+             <div class="welcome-message" style="background-color:#15370D; color: white; padding: 20px 15px; border-radius: 12px; margin-bottom: 20px;">
+                <h1>Welcome to <span style="color: rgb(255, 174, 0); font-weight: bold;"><i>PROJECTBUD</i>  </span>  for BSIT 1A Students!</h1>
+                <p style="font-size: 20px; margin: 0;"> Your friendly academic buddy website designed specifically for BSIT 1A students. Organize your group activities, assign tasks, and collaborate easily online without confusion.</p>
+             </div>
+
+                <!-- Overview Banner -->
+                 <div class="overview" style="background-color: #15370D; color: white; padding: 20px 15px; border-radius: 12px; margin-bottom: 20px;"></div>
+            </div>
+     </div>
+</body>
+</html>

@@ -1,0 +1,411 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECTBUD - Activities</title>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+    
+/* GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #EBEBD8;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    background-color: #15370D;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+    flex-shrink: 0;
+}
+
+.web-name {
+    text-align: center;
+    padding: 20px 10px 35px;
+}
+
+.web-name div {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-item i {
+    width: 25px;
+    text-align: center;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color: #6a914e;
+}
+
+.nav-item.active {
+    font-weight: bold;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.top-header {
+    background-color: white;
+    padding: 20px 25px;
+    border-bottom: 1px solid #ddd;
+}
+
+.activities-section {
+    padding: 25px;
+}
+
+/* CARDS */
+.card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-bottom: 20px;
+    color: #15370D;
+}
+
+/* FORM */
+#activityForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#activityForm label {
+    font-weight: 600;
+}
+
+#activityForm input,
+#activityForm textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+#activityForm textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+#activityForm button {
+    background-color: #15370D;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#activityForm button:hover {
+    background-color: #6a914e;
+}
+
+/* ACTIVITY ITEMS */
+.activity-item {
+    border: 1px solid #ddd;
+    border-left: 5px solid #6a914e;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.activity-item h3 {
+    color: #15370D;
+    margin-bottom: 8px;
+}
+
+.activity-item p {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.delete-btn {
+    background-color: #b83232;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #8f2020;
+}
+
+/* SMALL SCREENS */
+@media (max-width: 650px) {
+    .sidebar {
+        width: 170px;
+    }
+
+    .activities-section {
+        padding: 12px;
+    }
+}
+
+</style>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="web-name">
+            <div>PROJECTBUD</div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="activities.html" class="nav-item active">
+                <i class="fa-solid fa-folder"></i>
+                <span>Activities</span>
+            </a>
+
+            <a href="tasks.html" class="nav-item">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Tasks</span>
+            </a>
+
+            <a href="schedule.html" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Schedule</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <header class="top-header">
+            <h2>Activities</h2>
+        </header>
+
+        <main class="activities-section">
+
+            <!-- Add Activity Form -->
+            <div class="card">
+                <h2>Add an Activity</h2>
+
+                <form id="activityForm">
+
+                    <label for="activityName">Activity Name</label>
+                    <input
+                        type="text"
+                        id="activityName"
+                        placeholder="Enter activity name"
+                        required
+                    >
+
+                    <label for="activityDesc">Description</label>
+                    <textarea
+                        id="activityDesc"
+                        placeholder="Describe the activity"
+                        required
+                    ></textarea>
+
+                    <label for="activityDate">Date</label>
+                    <input
+                        type="date"
+                        id="activityDate"
+                        required
+                    >
+
+                    <button type="submit">Add Activity</button>
+
+                </form>
+            </div>
+
+            <!-- Activity List -->
+            <div class="card">
+                <h2>Activity List</h2>
+                <div id="activityList">
+                    No activities yet.
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+// Get saved activities
+let activities = JSON.parse(localStorage.getItem("activities")) || [];
+
+// Give older activities a default status
+activities.forEach(function(activity) {
+    if (!activity.status) {
+        activity.status = "In Progress";
+    }
+});
+
+// Get HTML elements
+const activityForm = document.getElementById("activityForm");
+const activityList = document.getElementById("activityList");
+
+// Save activities
+function saveActivities() {
+    localStorage.setItem("activities", JSON.stringify(activities));
+}
+
+// Display activities
+function showActivities() {
+    activityList.innerHTML = "";
+
+    if (activities.length === 0) {
+        activityList.textContent = "No activities yet.";
+        return;
+    }
+
+    activities.forEach(function(activity, index) {
+        const item = document.createElement("div");
+        item.className = "activity-item";
+
+        if (activity.status === "Done") {
+            item.classList.add("status-done");
+        } else {
+            item.classList.add("status-progress");
+        }
+
+        const name = document.createElement("h3");
+        name.textContent = activity.name;
+
+        const description = document.createElement("p");
+        description.textContent = activity.description;
+
+        const date = document.createElement("p");
+        date.textContent = "Deadline: " + activity.date;
+
+        // Status dropdown
+        const statusContainer = document.createElement("div");
+        statusContainer.className = "activity-status";
+
+        const statusLabel = document.createElement("label");
+        statusLabel.textContent = "Status:";
+
+        const statusSelect = document.createElement("select");
+
+        const progressOption = document.createElement("option");
+        progressOption.value = "In Progress";
+        progressOption.textContent = "In Progress";
+
+        const doneOption = document.createElement("option");
+        doneOption.value = "Done";
+        doneOption.textContent = "Done";
+
+        statusSelect.appendChild(progressOption);
+        statusSelect.appendChild(doneOption);
+
+        statusSelect.value = activity.status;
+
+        statusSelect.addEventListener("change", function() {
+            activities[index].status = statusSelect.value;
+            saveActivities();
+            showActivities();
+        });
+
+        statusContainer.appendChild(statusLabel);
+        statusContainer.appendChild(statusSelect);
+
+        // Delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-btn";
+
+        deleteButton.addEventListener("click", function() {
+            deleteActivity(index);
+        });
+
+        item.appendChild(name);
+        item.appendChild(description);
+        item.appendChild(date);
+        item.appendChild(statusContainer);
+        item.appendChild(deleteButton);
+
+        activityList.appendChild(item);
+    });
+}
+
+// Add an activity
+activityForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const activity = {
+        name: document.getElementById("activityName").value,
+        description: document.getElementById("activityDesc").value,
+        date: document.getElementById("activityDate").value,
+        status: "In Progress"
+    };
+
+    activities.push(activity);
+
+    saveActivities();
+    showActivities();
+
+    activityForm.reset();
+});
+
+// Delete an activity
+function deleteActivity(index) {
+    activities.splice(index, 1);
+
+    saveActivities();
+    showActivities();
+}
+
+// Save the default status for older activities
+saveActivities();
+
+// Display saved activities
+showActivities();
+</script>
+
+</body>
+</html>

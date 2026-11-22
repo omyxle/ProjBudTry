@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECTBUD - Tasks</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+/* GENERAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ebebd8;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 250px;
+  background-color: #15370d;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+  flex-shrink: 0;
+}
+
+.web-name {
+  text-align: center;
+  padding: 20px 10px 35px;
+}
+
+.web-name div {
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.nav-item i {
+  width: 25px;
+  text-align: center;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: #6a914e;
+}
+
+.nav-item.active {
+  font-weight: bold;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.top-header {
+  background-color: white;
+  padding: 20px 25px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tasks-section {
+  padding: 25px;
+}
+
+/* CARDS */
+.card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+  margin-bottom: 20px;
+  color: #15370d;
+}
+
+/* FORM */
+#taskForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#taskForm label {
+  font-weight: 600;
+}
+
+#taskForm input,
+#taskForm select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+#taskForm button {
+  background-color: #15370d;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#taskForm button:hover {
+  background-color: #6a914e;
+}
+
+#taskForm button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+
+/* TASK ITEMS */
+.task-item {
+  border: 1px solid #ddd;
+  border-left: 5px solid #6a914e;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.task-item h3 {
+  color: #15370d;
+  margin-bottom: 8px;
+}
+
+.task-item p {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+/* STATUS */
+.task-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.task-status label {
+  font-weight: 600;
+}
+
+.task-status select {
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.status-progress {
+  border-left-color: #d99b24;
+}
+
+.status-done {
+  border-left-color: #4b9147;
+}
+
+/* DELETE BUTTON */
+.delete-btn {
+  background-color: #b83232;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #8f2020;
+}
+
+/* SMALL SCREENS */
+@media (max-width: 650px) {
+  .sidebar {
+    width: 170px;
+  }
+
+  .tasks-section {
+    padding: 12px;
+  }
+}
+</style>
+<body>
+
+    <div class="sidebar">
+        <div class="web-name">
+            <div>PROJECTBUD</div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="activities.html" class="nav-item">
+                <i class="fa-solid fa-folder"></i>
+                <span>Activities</span>
+            </a>
+
+            <a href="tasks.html" class="nav-item active">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Tasks</span>
+            </a>
+
+            <a href="schedule.html" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Schedule</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+
+        <header class="top-header">
+            <h2>Tasks</h2>
+        </header>
+
+        <main class="tasks-section">
+
+            <div class="card">
+                <h2>Assign a Task</h2>
+
+                <form id="taskForm">
+
+                    <label for="taskName">Task Name</label>
+                    <input
+                        type="text"
+                        id="taskName"
+                        placeholder="Enter task name"
+                        required
+                    >
+
+                    <label for="taskActivity">Activity</label>
+                    <select id="taskActivity" required>
+                        <option value="">Select an activity</option>
+                    </select>
+
+                    <label for="taskMember">Assign to Member</label>
+                    <input
+                        type="text"
+                        id="taskMember"
+                        placeholder="Enter member's name"
+                        required
+                    >
+
+                    <label for="taskDeadline">Task Deadline</label>
+                    <input type="date" id="taskDeadline" required>
+
+                    <button type="submit" id="addTaskButton">
+                        Add Task
+                    </button>
+
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Assigned Tasks</h2>
+                <div id="taskList">No tasks yet.</div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Get saved tasks and activities
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        let activities = JSON.parse(localStorage.getItem("activities")) || [];
+
+        // Give older tasks a default status
+        tasks.forEach(function (task) {
+          if (!task.status) {
+            task.status = "In Progress";
+          }
+        });
+
+        // Get HTML elements
+        const taskForm = document.getElementById("taskForm");
+        const taskList = document.getElementById("taskList");
+        const taskActivity = document.getElementById("taskActivity");
+        const addTaskButton = document.getElementById("addTaskButton");
+
+        // Save tasks
+        function saveTasks() {
+          localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+
+        // Load activities into the dropdown
+        function loadActivities() {
+          activities = JSON.parse(localStorage.getItem("activities")) || [];
+
+          taskActivity.innerHTML = "";
+
+          if (activities.length === 0) {
+            const option = document.createElement("option");
+            option.value = "";
+            option.textContent = "No activities available";
+            taskActivity.appendChild(option);
+
+            addTaskButton.disabled = true;
+            return;
+          }
+
+          addTaskButton.disabled = false;
+
+          const defaultOption = document.createElement("option");
+          defaultOption.value = "";
+          defaultOption.textContent = "Select an activity";
+          taskActivity.appendChild(defaultOption);
+
+          activities.forEach(function (activity) {
+            const option = document.createElement("option");
+            option.value = activity.name;
+            option.textContent = activity.name;
+
+            taskActivity.appendChild(option);
+          });
+        }
+
+        // Display tasks
+        function showTasks() {
+          taskList.innerHTML = "";
+
+          if (tasks.length === 0) {
+            taskList.textContent = "No tasks yet.";
+            return;
+          }
+
+          tasks.forEach(function (task, index) {
+            const item = document.createElement("div");
+
+            item.className = "task-item";
+
+            if (task.status === "Done") {
+              item.classList.add("status-done");
+            } else {
+              item.classList.add("status-progress");
+            }
+
+            // Task name
+            const name = document.createElement("h3");
+            name.textContent = task.name;
+
+            // Activity
+            const activity = document.createElement("p");
+            activity.textContent = "Activity: " + task.activity;
+
+            // Assigned member
+            const member = document.createElement("p");
+            member.textContent = "Assigned to: " + task.member;
+
+            // Deadline
+            const deadline = document.createElement("p");
+            deadline.textContent = "Deadline: " + task.deadline;
+
+            // Status selector
+            const statusContainer = document.createElement("div");
+            statusContainer.className = "task-status";
+
+            const statusLabel = document.createElement("label");
+            statusLabel.textContent = "Status:";
+
+            const statusSelect = document.createElement("select");
+
+            const progressOption = document.createElement("option");
+            progressOption.value = "In Progress";
+            progressOption.textContent = "In Progress";
+
+            const doneOption = document.createElement("option");
+            doneOption.value = "Done";
+            doneOption.textContent = "Done";
+
+            statusSelect.appendChild(progressOption);
+            statusSelect.appendChild(doneOption);
+
+            statusSelect.value = task.status;
+
+            // Update status when changed
+            statusSelect.addEventListener("change", function () {
+              tasks[index].status = statusSelect.value;
+
+              saveTasks();
+              showTasks();
+            });
+
+            statusContainer.appendChild(statusLabel);
+            statusContainer.appendChild(statusSelect);
+
+            // Delete button
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-btn";
+
+            deleteButton.addEventListener("click", function () {
+              deleteTask(index);
+            });
+
+            // Add everything to the task item
+            item.appendChild(name);
+            item.appendChild(activity);
+            item.appendChild(member);
+            item.appendChild(deadline);
+            item.appendChild(statusContainer);
+            item.appendChild(deleteButton);
+
+            taskList.appendChild(item);
+          });
+        }
+
+        // Add a task
+        taskForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const task = {
+            name: document.getElementById("taskName").value,
+            activity: taskActivity.value,
+            member: document.getElementById("taskMember").value,
+            deadline: document.getElementById("taskDeadline").value,
+            status: "In Progress",
+          };
+
+          tasks.push(task);
+
+          saveTasks();
+          showTasks();
+
+          taskForm.reset();
+        });
+
+        // Delete a task
+        function deleteTask(index) {
+          tasks.splice(index, 1);
+
+          saveTasks();
+          showTasks();
+        }
+
+        // Display saved information
+        loadActivities();
+        showTasks();
+    </script>
+
+</body>
+</html>
